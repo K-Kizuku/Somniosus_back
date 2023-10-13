@@ -1,0 +1,22 @@
+{
+  "name": "somniosus_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "changelog.config.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "commit": "git-cz",
+    "scaffdog": "scaffdog"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "git-cz": "^4.9.0",
+    "prettier-plugin-scaffdog": "^3.0.0",
+    "scaffdog": "^3.0.0"
+  }
+}
