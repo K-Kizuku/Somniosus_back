@@ -1,0 +1,2 @@
+'service: hoge':
+- apps/hoge/**/*
