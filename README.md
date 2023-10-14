@@ -6,6 +6,13 @@
 
 `make setup-tools`
 
+使用ツール一覧
+
+- git-cz
+- scaffdog
+- wire
+- gomock
+
 ### 各種コマンドの説明
 
 ```sh
@@ -37,6 +44,8 @@ Architectural Decision Recordの略
 
 ## ディレクトリ構成
 
+### 全体像
+
 ```sh
 .
 ├── .github
@@ -62,5 +71,39 @@ Architectural Decision Recordの略
 ├── lib # 汎用関数群
 ├── protobuf # protocol buffers
 └── scripts # 各種スクリプト
-    └── create_service.sh
+    └── create_service.sh # マイクロサービスのテンプレート作成のスクリプト
+```
+
+### マイクロサービス内部
+
+マイクロサービス内部はクリーンアーキテクチャを意識しています
+
+```sh
+.
+├── app
+│   ├── domain # ドメインロジック
+│   │   ├── model # ドメインモデル
+│   │   ├── repository # repositoryのインターフェイス
+│   │   └── service # ドメインサービス
+│   ├── infra
+│   │   ├── dao # repositoryの実装
+│   │   │   └── query # readの処理
+│   │   ├── db
+│   │   │   ├── ddl # テーブル定義
+│   │   │   ├── migrations # マイグレーション
+│   │   │   └── seed # シード
+│   │   └── dto # structの変換
+│   ├── ui
+│   │   └── grpc # grpcのアダプター
+│   └── usecase
+│       └── query # getの処理
+├── cmd
+├── config # 各種設定
+└── test
+    ├── mock_domain # ドメインのモック
+    │   └── mockgen.go
+    ├── mock_infra # インフラのモック
+    │   └── mockgen.go
+    └── mock_usecase # ユースケースのモック
+        └── mockgen.go
 ```
