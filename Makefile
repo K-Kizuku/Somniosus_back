@@ -3,7 +3,6 @@
 .PHONY: setup-tools c-service adr commit
 
 setup-tools:
-	npm install
 	@if [ -z `command -v air` ]; then go install github.com/cosmtrek/air@latest ; fi
 
 c-service:
@@ -15,5 +14,5 @@ adr:
 	npx scaffdog generate ADR --output 'docs/adr' --answer 'number:${ADR_COUNT}'
 
 commit:
-	npm run commit
+	npx git-cz
 
