@@ -107,3 +107,4 @@ Architectural Decision Recordの略
     └── mock_usecase # ユースケースのモック
         └── mockgen.go
 ```
+

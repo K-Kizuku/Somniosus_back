@@ -1,0 +1,64 @@
+services:
+  #アカウント関連はPORT11000番台
+  account-app:
+    build:
+      context: .
+      dockerfile: docker/account/Dockerfile
+      target: builder
+    command: ["sh", "-c", "make watch-account"]
+    tty: true
+    env_file:
+      - apps/account/.env
+    ports:
+      - "11000:50051"
+    volumes:
+      - ".:/go/src/github.com/K-Kizuku/Somniosus_back:cached"
+    networks:
+      - microservices-shared
+      - default
+    depends_on:
+      - test-db
+
+  test-db:
+    image: postgres:15.3
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=p@ssword
+      - POSTGRES_DB=onden_app
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+      - data-volume:/var/log
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d onden_app"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
+  migration:
+    build:
+      context: .
+      dockerfile: docker/migration/Dockerfile
+      target: base
+    working_dir: /migration
+    env_file:
+      - docker/migration/.env
+    environment:
+      - GOOSE_DRIVER=${GOOSE_DRIVER:-postgres}
+      - GOOSE_DBSTRING=${GOOSE_DBSTRING:-host=db user=root dbname=treasure_app password=p@ssword}
+    volumes:
+      - ./db/migration:/migration
+    depends_on:
+      test-db:
+        condition: service_healthy
+
+networks:
+  microservices-shared:
+    external: true
+
+volumes:
+  test-db:
+  data-volume:

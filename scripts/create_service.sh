@@ -10,36 +10,44 @@ BASE_DIR=$1
 # Create base directory
 mkdir -p "apps/$BASE_DIR"
 cd "apps/$BASE_DIR"
+touch .env
+
+mkdir test
+touch .gitkeep
+mkdir config
+touch .gitkeep
+mkdir cmd
+touch main.go
 
 # domain
-mkdir -p domain/model
-mkdir -p domain/repository
-mkdir -p domain/service
-touch domain/.gitkeep
-touch domain/model/.gitkeep
-touch domain/repository/.gitkeep
-touch domain/service/.gitkeep
+mkdir -p app/domain/model
+mkdir -p app/domain/repository
+mkdir -p app/domain/service
+touch app/domain/.gitkeep
+touch app/domain/model/.gitkeep
+touch app/domain/repository/.gitkeep
+touch app/domain/service/.gitkeep
 
 # infra
-mkdir -p infra/dao/query
-mkdir -p infra/db/ddl
-mkdir -p infra/db/migrations
-mkdir -p infra/db/seed
-mkdir -p infra/dto
-touch infra/.gitkeep
-touch infra/dao/.gitkeep
-touch infra/dao/query/.gitkeep
-touch infra/db/ddl/.gitkeep
-touch infra/db/migrations/.gitkeep
-touch infra/db/seed/.gitkeep
-touch infra/dto/.gitkeep
+mkdir -p app/infra/dao/query
+mkdir -p app/infra/db/ddl
+mkdir -p app/infra/db/migrations
+mkdir -p app/infra/db/seed
+mkdir -p app/infra/dto
+touch app/infra/.gitkeep
+touch app/infra/dao/.gitkeep
+touch app/infra/dao/query/.gitkeep
+touch app/infra/db/ddl/.gitkeep
+touch app/infra/db/migrations/.gitkeep
+touch app/infra/db/seed/.gitkeep
+touch app/infra/dto/.gitkeep
 
 # ui
-mkdir -p ui/grpc
-touch ui/.gitkeep
-touch ui/grpc/.gitkeep
+mkdir -p app/ui/grpc
+touch app/ui/.gitkeep
+touch app/ui/grpc/.gitkeep
 
 # usecase
-mkdir -p usecase/query
-touch usecase/.gitkeep
-touch usecase/query/.gitkeep
+mkdir -p app/usecase/query
+touch app/usecase/.gitkeep
+touch app/usecase/query/.gitkeep
