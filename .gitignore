@@ -1,3 +1,4 @@
 node_modules
 .env
 connect_db.sh
+wire_gen.go
