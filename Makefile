@@ -45,12 +45,12 @@ lint:
 ###### DB
 
 POSTGRES_USER := root
-DATABASE      := treasure_app
+DATABASE      := onden_app
 psql:
-	$(DOCKER_COMPOSE) exec db psql -U $(POSTGRES_USER) -d $(DATABASE)
+	$(DOCKER_COMPOSE) exec test-db psql -U $(POSTGRES_USER) -d $(DATABASE)
 
 GOOSE_DRIVER   := postgres
-GOOSE_DBSTRING ?= host=db user=root dbname=treasure_app password=p@ssword sslmode=disable
+GOOSE_DBSTRING ?= host=test-db user=root dbname=onden_app password=p@ssword sslmode=disable
 migrate/status:
 	$(DOCKER_COMPOSE) run --rm migration status
 
@@ -103,5 +103,18 @@ $(foreach app,$(APPS), \
 			--build.include_dir=["apps/$(app)/...", "lib/..."] \
 			--root ./apps/$(app) \
 			-c .air.toml \
+	) \
+)
+
+.PHONY: wire
+wire: $(addprefix wire-,$(APPS))
+
+# watch-<appname>の生成
+.PHONY: $(addprefix wire-,$(APPS))
+$(foreach app,$(APPS), \
+	$(eval \
+	wire-$(app):;\
+		@if ! [ -x $(GOPATH)/bin/wire ]; then go install github.com/google/wire/cmd/wire@latest ; fi; \
+		wire ./apps/$(app)/... \
 	) \
 )

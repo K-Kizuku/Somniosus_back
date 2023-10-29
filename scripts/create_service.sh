@@ -13,11 +13,11 @@ cd "apps/$BASE_DIR"
 touch .env
 
 mkdir test
-touch .gitkeep
+touch test/.gitkeep
 mkdir config
-touch .gitkeep
+touch config/.gitkeep
 mkdir cmd
-touch main.go
+touch cmd/main.go
 
 # domain
 mkdir -p app/domain/model

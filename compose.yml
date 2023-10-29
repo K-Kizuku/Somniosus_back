@@ -14,7 +14,7 @@ services:
     volumes:
       - ".:/go/src/github.com/K-Kizuku/Somniosus_back:cached"
     networks:
-      - microservices-shared
+      # - microservices-shared
       - default
     depends_on:
       - test-db
@@ -42,22 +42,22 @@ services:
     build:
       context: .
       dockerfile: docker/migration/Dockerfile
-      target: base
+      # target: base
     working_dir: /migration
-    env_file:
-      - docker/migration/.env
+    # env_file:
+    #   - docker/migration/.env
     environment:
       - GOOSE_DRIVER=${GOOSE_DRIVER:-postgres}
-      - GOOSE_DBSTRING=${GOOSE_DBSTRING:-host=db user=root dbname=treasure_app password=p@ssword}
+      - GOOSE_DBSTRING=${GOOSE_DBSTRING:-host=test-db user=root dbname=onden_app password=p@ssword}
     volumes:
-      - ./db/migration:/migration
+      - ./apps/account/app/infra/db/migrations:/migration
     depends_on:
       test-db:
         condition: service_healthy
 
-networks:
-  microservices-shared:
-    external: true
+# networks:
+#   microservices-shared:
+#     external: true
 
 volumes:
   test-db:
